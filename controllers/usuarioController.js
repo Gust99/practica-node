@@ -54,7 +54,7 @@ async function updateUsuario(request, response) {
     }
 }
 async function deleteUsuario(request, response) {
-    let id = request.params.id;
+    let id = request.body.id;
 
     let targetRow = await usuarioModel.findAll({
         where: {
@@ -68,10 +68,10 @@ async function deleteUsuario(request, response) {
     if(targetRow.length > 0) {
         targetRow = targetRow[0];
 
-        targetRow.update(targetRow);
+        targetRow.update({ visible: false });
         targetRow.save();
 
-        response.status(200).send({ targetRow });
+        response.status(200).send({ message: 'deleted' });
     } else {
         response.status(409).send({ message: 'User not found' });
     }
