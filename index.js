@@ -7,7 +7,7 @@ let port = 3000;
 
 db.authenticate()
 .then(async () => {
-    await db.sync();
+    await db.sync({ alter: true });
     
     app.listen(port, () => {
         console.log('Server up.');

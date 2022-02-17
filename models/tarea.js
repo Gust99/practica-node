@@ -1,7 +1,8 @@
 'use strict'
 
-let { DataTypes } = require('sequelize');
+let { DataTypes, Deferrable } = require('sequelize');
 let db = require('../database/db');
+let usuarioModel = require('./usuario');
 
 const Tarea = db.define('Tarea', {
     id: {
@@ -29,6 +30,19 @@ const Tarea = db.define('Tarea', {
         type: DataTypes.BOOLEAN,
         defaultValue: false,
         allowNull: false
+    },
+    visible: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true,
+        allowNull: false
+    },
+    user_id: {
+        type: DataTypes.INTEGER,
+        references: {
+            model: usuarioModel,
+            key: 'id',
+            deferrable: Deferrable.INITIALLY_IMMEDIATE
+        }
     }
 });
 
